@@ -61,12 +61,14 @@ canvas {
  justify-content: center;
  align-items: center;
  margin: auto;
- width: auto;
+ width: 100%; /* Adjust canvas width to be responsive */
+ max-width: 500px; /* Keep a maximum width for larger screens */
 }
 #ohmCanvas, #wheatstoneCanvas {
  border: 1px solid #000;
- width: 500px;
- height: 300px;
+ width: 100%; /* Make canvases responsive */
+ height: auto; /* Adjust height based on width */
+ max-width: 500px;
 }
 .resistor-group {
  margin: 10px 0;
@@ -105,12 +107,18 @@ canvas {
  form {
      padding: 10px;
  }
- input, button {
-     width: 100%;
+ input{
+    width: 90%;
+ }
+ button{
+  width: 100%;
  }
  .resistor-group input {
      width: 100%;
      display: block;
      margin: 5px 0;
+ }
+ canvas {
+     width: 100%; /* Ensure canvas is full width on smaller screens */
  }
 }
