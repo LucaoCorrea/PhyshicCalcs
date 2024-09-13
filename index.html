@@ -1,384 +1,166 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora da Lei de Ohm e Diagrama Interativo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        h1 {
-            text-align: center;
-            color: #4a90e2;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .section {
-            margin-bottom: 40px;
-        }
-        form {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #4a90e2;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #357abd;
-        }
-        canvas {
-            border: 1px solid #ddd;
-            background-color: #fff;
-            display: block;
-            margin: auto;
-        }
-        .output, .tutorial {
-            margin: 20px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .tutorial {
-            text-align: left;
-            margin-top: 40px;
-        }
-        .resistor-group {
-            margin: 10px 0;
-        }
-        .resistor-group input {
-            width: calc(50% - 22px);
-            display: inline-block;
-            margin-right: 10px;
-        }
-        .add-resistor {
-            background-color: #5cb85c;
-        }
-        .add-resistor:hover {
-            background-color: #4cae4c;
-        }
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            form {
-                padding: 10px;
-            }
-            canvas {
-                width: 100%;
-                height: auto;
-            }
-            .resistor-group input {
-                width: 100%;
-                display: block;
-                margin-right: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <h1>Calculadora da Lei de Ohm e Diagrama Interativo</h1>
-    
-    <div class="container">
-        <!-- Calculadora da Lei de Ohm -->
-        <div class="section">
-            <h2>Calculadora da Lei de Ohm</h2>
-            <form id="ohmForm">
-                <label for="tensao">Tensão (V):</label>
-                <input type="number" id="tensao" step="any">
-                
-                <label for="corrente">Corrente (I):</label>
-                <input type="number" id="corrente" step="any">
-                
-                <label for="resistencia">Resistência (R):</label>
-                <input type="number" id="resistencia" step="any">
-                
-                <button type="button" onclick="calcularOhm()">Calcular</button>
-            </form>
-            <div class="output" id="resultado"></div>
-            <div class="tutorial" id="tutorialOhm"></div>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadoras de Física Elétrica</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Calculadoras de Física Elétrica</h1>
 
-        <!-- Diagrama da Lei de Ohm -->
-        <div class="section">
-            <h2>Diagrama da Lei de Ohm</h2>
-            <canvas id="ohmCanvas" width="600" height="400"></canvas>
-        </div>
-        
-        <!-- Calculadora da Ponte de Wheatstone -->
-        <div class="section">
-            <h2>Diagrama da Ponte de Wheatstone</h2>
-            <form id="wheatstoneForm">
-                <div id="resistorContainer">
-                    <div class="resistor-group">
-                        <label for="R1">Resistência R1 (Ω):</label>
-                        <input type="number" id="R1" step="any" value="10" required>
-                    </div>
-                    <div class="resistor-group">
-                        <label for="R2">Resistência R2 (Ω):</label>
-                        <input type="number" id="R2" step="any" value="100" required>
-                    </div>
-                    <div class="resistor-group">
-                        <label for="R3">Resistência R3 (Ω):</label>
-                        <input type="number" id="R3" step="any" value="16" required>
-                    </div>
-                    <div class="resistor-group" id="extraResistors"></div>
-                </div>
-                
-                <button type="button" class="add-resistor" onclick="adicionarResistor()">Adicionar Resistores</button>
-                <button type="button" onclick="atualizarDiagrama()">Atualizar Diagrama</button>
-            </form>
-            <div class="output" id="resultadoWheatstone"></div>
-            <canvas id="wheatstoneCanvas" width="600" height="400"></canvas>
-        </div>
+    <div class="container">
+      <!-- Calculadora da Lei de Ohm -->
+      <div class="section">
+        <h2>Calculadora da Lei de Ohm</h2>
+        <form id="ohmForm">
+          <label for="tensao">Tensão (V):</label>
+          <input type="number" id="tensao" step="any" />
+
+          <label for="corrente">Corrente (I):</label>
+          <input type="number" id="corrente" step="any" />
+
+          <label for="resistencia">Resistência (R):</label>
+          <input type="number" id="resistencia" step="any" />
+
+          <button type="button" onclick="calcularOhm()">Calcular</button>
+        </form>
+        <div class="output" id="resultado"></div>
+        <div class="tutorial" id="tutorialOhm"></div>
+      </div>
+
+      <!-- Diagrama da Lei de Ohm -->
+      <div class="section">
+        <h2>Diagrama da Lei de Ohm</h2>
+        <canvas id="ohmCanvas" width="600" height="400"></canvas>
+      </div>
+
+      <!-- Calculadora da Ponte de Wheatstone -->
+      <div class="section">
+        <h2>Calculadora da Ponte de Wheatstone</h2>
+        <form id="wheatstoneForm">
+          <div id="resistorContainer">
+            <div class="resistor-group">
+              <label for="R1">Resistência R1 (Ω):</label>
+              <input type="number" id="R1" step="any" value="10" required />
+            </div>
+            <div class="resistor-group">
+              <label for="R2">Resistência R2 (Ω):</label>
+              <input type="number" id="R2" step="any" value="100" required />
+            </div>
+            <div class="resistor-group">
+              <label for="R3">Resistência R3 (Ω):</label>
+              <input type="number" id="R3" step="any" value="16" required />
+            </div>
+            <div class="resistor-group" id="extraResistors"></div>
+          </div>
+
+          <button
+            type="button"
+            class="add-resistor"
+            onclick="adicionarResistor()"
+          >
+            Adicionar Resistores
+          </button>
+          <button type="button" onclick="atualizarDiagramaWheatstone()">
+            Atualizar Diagrama
+          </button>
+        </form>
+        <div class="output" id="resultadoWheatstone"></div>
+        <div class="tutorial" id="tutorialWheatstone"></div>
+        <!-- Adicione este elemento dentro da seção da Ponte de Wheatstone -->
+        <canvas
+          id="wheatstoneCanvas"
+          width="600"
+          height="300"
+          style="border: 1px solid #000"
+        ></canvas>
+      </div>
+
+      <!-- Calculadora do Divisor de Tensão -->
+      <div class="section">
+        <h2>Calculadora do Divisor de Tensão</h2>
+        <form id="tensaoForm">
+          <label for="Vin">Tensão de Entrada (Vin):</label>
+          <input type="number" id="Vin" step="any" />
+
+          <label for="R1">Resistência R1 (Ω):</label>
+          <input type="number" id="R1_div" step="any" />
+
+          <label for="R2">Resistência R2 (Ω):</label>
+          <input type="number" id="R2_div" step="any" />
+
+          <button type="button" onclick="calcularDivisorTensao()">
+            Calcular
+          </button>
+        </form>
+        <div class="output" id="resultadoDivisorTensao"></div>
+        <div class="tutorial" id="tutorialDivisorTensao"></div>
+      </div>
+
+      <!-- Calculadora do Divisor de Corrente -->
+      <div class="section">
+        <h2>Calculadora do Divisor de Corrente</h2>
+        <form id="correnteForm">
+          <label for="Iin">Corrente de Entrada (Iin):</label>
+          <input type="number" id="Iin" step="any" />
+
+          <label for="R1">Resistência R1 (Ω):</label>
+          <input type="number" id="R1_corr" step="any" />
+
+          <label for="R2">Resistência R2 (Ω):</label>
+          <input type="number" id="R2_corr" step="any" />
+
+          <button type="button" onclick="calcularDivisorCorrente()">
+            Calcular
+          </button>
+        </form>
+        <div class="output" id="resultadoDivisorCorrente"></div>
+        <div class="tutorial" id="tutorialDivisorCorrente"></div>
+      </div>
+
+      <!-- Calculadora da Potência -->
+      <div class="section">
+        <h2>Calculadora da Potência</h2>
+        <form id="potenciaForm">
+          <label for="tensao_pot">Tensão (V):</label>
+          <input type="number" id="tensao_pot" step="any" />
+
+          <label for="corrente_pot">Corrente (I):</label>
+          <input type="number" id="corrente_pot" step="any" />
+
+          <label for="resistencia_pot">Resistência (R):</label>
+          <input type="number" id="resistencia_pot" step="any" />
+
+          <button type="button" onclick="calcularPotencia()">Calcular</button>
+        </form>
+        <div class="output" id="resultadoPotencia"></div>
+        <div class="tutorial" id="tutorialPotencia"></div>
+      </div>
+
+      <!-- Calculadora de Circuitos em Série e Paralelo -->
+      <div class="section">
+        <h2>Calculadora de Circuitos em Série e Paralelo</h2>
+        <form id="serieParaleloForm">
+          <label for="resistencias_serie"
+            >Resistências em Série (Ω, separadas por vírgula):</label
+          >
+          <input type="text" id="resistencias_serie" />
+
+          <label for="resistencias_paralelo"
+            >Resistências em Paralelo (Ω, separadas por vírgula):</label
+          >
+          <input type="text" id="resistencias_paralelo" />
+
+          <button type="button" onclick="calcularSerieParalelo()">
+            Calcular
+          </button>
+        </form>
+        <div class="output" id="resultadoSerieParalelo"></div>
+        <div class="tutorial" id="tutorialSerieParalelo"></div>
+      </div>
     </div>
 
-    <script>
-        let resistorCount = 0;
-
-        function calcularOhm() {
-            const V = parseFloat(document.getElementById('tensao').value);
-            const I = parseFloat(document.getElementById('corrente').value);
-            const R = parseFloat(document.getElementById('resistencia').value);
-
-            let resultV, resultI, resultR;
-            let tutorialText = "";
-
-            if (isNaN(V) && !isNaN(I) && !isNaN(R)) {
-                resultV = I * R;
-                tutorialText = `
-                    <h3>Cálculo da Tensão (V)</h3>
-                    <p>Usamos a fórmula da Lei de Ohm: <strong>V = I × R</strong></p>
-                    <p>Onde:</p>
-                    <ul>
-                        <li>I = Corrente (em amperes, A)</li>
-                        <li>R = Resistência (em ohms, Ω)</li>
-                    </ul>
-                    <p>Substituindo os valores:</p>
-                    <p>V = ${I} A × ${R} Ω = ${resultV} V</p>
-                `;
-            } else if (!isNaN(V) && isNaN(I) && !isNaN(R)) {
-                resultI = V / R;
-                tutorialText = `
-                    <h3>Cálculo da Corrente (I)</h3>
-                    <p>Usamos a fórmula da Lei de Ohm: <strong>I = V / R</strong></p>
-                    <p>Onde:</p>
-                    <ul>
-                        <li>V = Tensão (em volts, V)</li>
-                        <li>R = Resistência (em ohms, Ω)</li>
-                    </ul>
-                    <p>Substituindo os valores:</p>
-                    <p>I = ${V} V / ${R} Ω = ${resultI} A</p>
-                `;
-            } else if (!isNaN(V) && !isNaN(I) && isNaN(R)) {
-                resultR = V / I;
-                tutorialText = `
-                    <h3>Cálculo da Resistência (R)</h3>
-                    <p>Usamos a fórmula da Lei de Ohm: <strong>R = V / I</strong></p>
-                    <p>Onde:</p>
-                    <ul>
-                        <li>V = Tensão (em volts, V)</li>
-                        <li>I = Corrente (em amperes, A)</li>
-                    </ul>
-                    <p>Substituindo os valores:</p>
-                    <p>R = ${V} V / ${I} A = ${resultR} Ω</p>
-                `;
-            } else {
-                document.getElementById('resultado').innerText = 'Por favor, preencha exatamente dois dos três campos.';
-                document.getElementById('tutorialOhm').innerHTML = '';
-                return;
-            }
-
-            document.getElementById('resultado').innerText = `
-                Tensão (V): ${resultV || V || 0} V\n
-                Corrente (I): ${resultI || I || 0} A\n
-                Resistência (R): ${resultR || R || 0} Ω
-            `;
-            document.getElementById('tutorialOhm').innerHTML = tutorialText;
-
-            desenharDiagramaOhm(resultV || V || 0, resultI || I || 0, resultR || R || 0);
-        }
-
-        function desenharDiagramaOhm(V, I, R) {
-            const canvas = document.getElementById('ohmCanvas');
-            const ctx = canvas.getContext('2d');
-            const largura = canvas.width;
-            const altura = canvas.height;
-
-            ctx.clearRect(0, 0, largura, altura);
-
-            // Desenhar o retângulo do circuito
-            ctx.beginPath();
-            ctx.moveTo(100, 100);
-            ctx.lineTo(300, 100);
-            ctx.lineTo(300, 200);
-            ctx.lineTo(100, 200);
-            ctx.closePath();
-            ctx.strokeStyle = '#000';
-            ctx.stroke();
-
-            // Desenhar os fios e componentes
-            ctx.beginPath();
-            ctx.moveTo(100, 150);
-            ctx.lineTo(50, 150);
-            ctx.moveTo(300, 150);
-            ctx.lineTo(350, 150);
-            ctx.stroke();
-
-            // Desenhar a fonte de tensão
-            ctx.font = '16px Arial';
-            ctx.fillText(`V = ${V} V`, 150, 80);
-
-            // Desenhar a corrente
-            ctx.fillText(`I = ${I} A`, 150, 220);
-
-            // Desenhar a resistência
-            ctx.fillText(`R = ${R} Ω`, 150, 150);
-        }
-
-        function adicionarResistor() {
-            resistorCount++;
-            const container = document.getElementById('extraResistors');
-            const div = document.createElement('div');
-            div.className = 'resistor-group';
-            div.innerHTML = `
-                <label for="R${resistorCount + 3}">Resistência R${resistorCount + 3} (Ω):</label>
-                <input type="number" id="R${resistorCount + 3}" step="any" required>
-            `;
-            container.appendChild(div);
-        }
-
-        function atualizarDiagrama() {
-            const R1 = parseFloat(document.getElementById('R1').value);
-            const R2 = parseFloat(document.getElementById('R2').value);
-            const R3 = parseFloat(document.getElementById('R3').value);
-
-            if (isNaN(R1) || isNaN(R2) || isNaN(R3)) {
-                alert('Por favor, insira todas as resistências.');
-                return;
-            }
-
-            // Coleta resistores extras
-            const resistoresExtras = [];
-            for (let i = 4; i <= resistorCount + 3; i++) {
-                const valor = parseFloat(document.getElementById(`R${i}`).value);
-                if (!isNaN(valor)) {
-                    resistoresExtras.push(valor);
-                }
-            }
-
-            // Calcula Rx
-            const Rx = (R3 * R2) / R1;
-            document.getElementById('resultadoWheatstone').innerText = `
-                Resistência R1: ${R1} Ω\n
-                Resistência R2: ${R2} Ω\n
-                Resistência R3: ${R3} Ω\n
-                Resistências adicionais: ${resistoresExtras.join(', ')} Ω\n
-                Resistência Rx (desconhecida): ${Rx.toFixed(2)} Ω
-            `;
-
-            const tutorialTextWheatstone = `
-                <h3>Cálculo da Resistência Rx na Ponte de Wheatstone</h3>
-                <p>Para que a ponte de Wheatstone esteja em equilíbrio, a resistência desconhecida Rx pode ser calculada pela fórmula:</p>
-                <p><strong>Rx = (R3 × R2) / R1</strong></p>
-                <p>Onde:</p>
-                <ul>
-                    <li>R1, R2 e R3 são as resistências conhecidas.</li>
-                </ul>
-                <p>Substituindo os valores:</p>
-                <p>Rx = (${R3} × ${R2}) / ${R1} = ${Rx.toFixed(2)} Ω</p>
-            `;
-            document.getElementById('tutorialOhm').innerHTML = tutorialTextWheatstone;
-
-            desenharDiagramaWheatstone(R1, R2, R3, Rx, resistoresExtras);
-        }
-
-        function desenharDiagramaWheatstone(R1, R2, R3, Rx, resistoresExtras) {
-            const canvas = document.getElementById('wheatstoneCanvas');
-            const ctx = canvas.getContext('2d');
-            const largura = canvas.width;
-            const altura = canvas.height;
-            const margem = 50;
-            const larguraLinha = 2;
-            const raio = 10;
-
-            ctx.clearRect(0, 0, largura, altura);
-
-            // Desenhar o retângulo da Ponte de Wheatstone
-            ctx.beginPath();
-            ctx.moveTo(margem, altura / 2 - 50);
-            ctx.lineTo(largura - margem, altura / 2 - 50);
-            ctx.lineTo(largura - margem, altura / 2 + 50);
-            ctx.lineTo(margem, altura / 2 + 50);
-            ctx.closePath();
-            ctx.strokeStyle = '#000';
-            ctx.stroke();
-
-            // Desenhar as linhas internas
-            ctx.beginPath();
-            ctx.moveTo(margem + 150, altura / 2 - 50);
-            ctx.lineTo(margem + 150, altura / 2 + 50);
-            ctx.moveTo(margem + 450, altura / 2 - 50);
-            ctx.lineTo(margem + 450, altura / 2 + 50);
-            ctx.moveTo(margem, altura / 2);
-            ctx.lineTo(margem + 150, altura / 2);
-            ctx.moveTo(margem + 450, altura / 2);
-            ctx.lineTo(largura - margem, altura / 2);
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = larguraLinha;
-            ctx.stroke();
-
-            // Desenhar os pontos
-            ctx.beginPath();
-            ctx.arc(margem, altura / 2, raio, 0, 2 * Math.PI);
-            ctx.arc(largura - margem, altura / 2, raio, 0, 2 * Math.PI);
-            ctx.arc(margem + 150, altura / 2, raio, 0, 2 * Math.PI);
-            ctx.arc(margem + 450, altura / 2, raio, 0, 2 * Math.PI);
-            ctx.fillStyle = '#000';
-            ctx.fill();
-
-            // Adicionar os valores das resistências
-            ctx.font = '16px Arial';
-            ctx.fillText(`R1 = ${R1} Ω`, margem + 10, altura / 2 - 70);
-            ctx.fillText(`R2 = ${R2} Ω`, largura - margem - 70, altura / 2 - 70);
-            ctx.fillText(`R3 = ${R3} Ω`, largura - margem - 70, altura / 2 + 30);
-            ctx.fillText(`Rx = ${Rx.toFixed(2)} Ω`, margem + 10, altura / 2 + 30);
-            resistoresExtras.forEach((r, index) => {
-                ctx.fillText(`R${index + 4} = ${r} Ω`, margem + 10, altura / 2 + 60 + (index * 20));
-            });
-        }
-    </script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
